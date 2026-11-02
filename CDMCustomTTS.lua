@@ -506,6 +506,10 @@ local function Install()
 
 		local cooldownID = cooldownItem:GetCooldownID()
 		local eventType = CooldownViewerAlert_GetEvent(alert)
+		-- Rule keys are built from these; a secret value cannot be stringified.
+		if issecretvalue and (issecretvalue(cooldownID) or issecretvalue(eventType)) then
+			return
+		end
 		if eventType == AURA_REMOVED_EVENT then
 			CancelDelayedSpeech(RuleKey(cooldownID, AURA_APPLIED_EVENT))
 		end
@@ -519,7 +523,14 @@ local function Install()
 		QueueSpeechReplacement(key, rule)
 	end)
 
-	hooksecurefunc(CooldownViewerSettingsEditAlertMixin, "DisplayForAlert", function(editor, _, alert, isNewAlert)
+	-- The editor frame is created from XML and copies its mixin's functions at
+	-- creation, so a hook placed on the mixin table afterwards never reaches it.
+	-- Hook the frame itself when it exists; the mixin is only a fallback.
+	local hookTarget = CooldownViewerSettingsEditAlert
+	if not (hookTarget and type(hookTarget.DisplayForAlert) == "function") then
+		hookTarget = CooldownViewerSettingsEditAlertMixin
+	end
+	hooksecurefunc(hookTarget, "DisplayForAlert", function(editor, _, alert, isNewAlert)
 		-- Capture the edited alert's rule key now: saving an edit rewrites the
 		-- stored alert in place before our Add-button hook runs.
 		editor._cdmOriginalRuleKey = nil
@@ -530,14 +541,14 @@ local function Install()
 		HookSaveButton(editor)
 		RefreshEditor(editor)
 	end)
-	hooksecurefunc(CooldownViewerSettingsEditAlertMixin, "SetupDropdowns", function(editor)
+	hooksecurefunc(hookTarget, "SetupDropdowns", function(editor)
 		CreateEditorExtension(editor)
 		RefreshEditor(editor)
 	end)
 
-	-- The editor is a Blizzard frame created from XML.  These two frame hooks are
-	-- a fallback for client builds that update the working alert without calling
-	-- the global setter helpers used above.
+	-- Fallback for client builds that update the working alert without calling
+	-- the method or global setter hooks above. OnUpdate only runs while the
+	-- editor is shown and compares a few cached fields.
 	if CooldownViewerSettingsEditAlert then
 		CooldownViewerSettingsEditAlert:HookScript("OnShow", function(editor)
 			CreateEditorExtension(editor)

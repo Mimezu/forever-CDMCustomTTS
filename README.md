@@ -1,9 +1,7 @@
-# CDM Custom TTS — Forever beta
+# CDM Custom TTS — Forever
 
-Local port of retail 0.4.0 for Forever beta (interface 16001), with the same
-live SavedVariables bridge used by the other addons in this installation.
-See [StorageWorkaround.local.md](StorageWorkaround.local.md) for persistence
-details and the reload/restart acceptance check.
+Local port of retail 0.4.0 for WoW Forever (interface 16001). Settings are
+stored in the native SavedVariables file `CDMCustomTTSDB`.
 
 Hear the alert you need instead of the full spell name.
 
@@ -27,9 +25,9 @@ CDM Custom TTS is lightweight, standalone, and has no addon dependencies.
 
 ## Install
 
-This copy is installed in `World of Warcraft/_classic_beta_/Interface/AddOns/`.
-Type `/reload` to discover it; restart the client if it does not appear.
-Keep its local manifest and save bridge when updating from retail.
+Copy the folder to `World of Warcraft/_forever_/Interface/AddOns/`. Type
+`/reload` to discover it; restart the client if it does not appear. Keep the
+Forever TOC when updating from retail.
 
 The finished folder should be named `CDMCustomTTS`.
 
@@ -63,8 +61,10 @@ controlled by the game's text-to-speech volume setting.
 
 ## Compatibility
 
-This installation targets Forever beta's built-in Cooldown Manager. Its alert
-editor and speech API match the retail addon. Other Classic clients are not
-covered by this port.
+This port targets WoW Forever's built-in Cooldown Manager. Its alert editor
+and speech API match the retail addon. Other Classic clients are not covered
+by this port.
+
+`/cdmtts` lists your custom lines; `/cdmtts clear` removes them all.
 
 Created by **Mimezu**.
