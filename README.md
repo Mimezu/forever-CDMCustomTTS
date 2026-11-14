@@ -67,4 +67,12 @@ by this port.
 
 `/cdmtts` lists your custom lines; `/cdmtts clear` removes them all.
 
+## Open
+
+- Minimap icon (drag to move)
+- Key: Esc > Options > AddOns > CDM Custom TTS, or Key Bindings
+- Same page: Open Cooldown Manager, Minimap icon
+
+Tests: `lua5.1 tests/Options.lua`
+
 Created by **Mimezu**.

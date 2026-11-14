@@ -1,4 +1,4 @@
-local addonName = ...
+local addonName, ns = ...
 
 local addon = CreateFrame("Frame")
 local db
@@ -58,6 +58,8 @@ local function StyleAddonButton(button)
 		self:SetBackdropColor(unpack(COLORS.cardAlt))
 	end)
 end
+
+ns.COLORS, ns.ApplyBackdrop, ns.StyleAddonButton = COLORS, ApplyBackdrop, StyleAddonButton
 
 local function StripDropdownArtwork(dropdown)
 	-- WowStyle1 provides the menu behavior we want, so retain the template and
@@ -599,6 +601,7 @@ end)
 local function Say(message)
 	print("|cff9c75ffCDM Custom TTS:|r " .. message)
 end
+ns.Say = Say
 
 local function CooldownLabel(cooldownID)
 	local id = tonumber(cooldownID)

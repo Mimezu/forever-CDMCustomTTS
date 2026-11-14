@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="CDMCUSTOMTTS_TOGGLE" category="BINDING_CATEGORY_CDMCUSTOMTTS">
+		CDMCustomTTS_Toggle()
+	</Binding>
+</Bindings>
