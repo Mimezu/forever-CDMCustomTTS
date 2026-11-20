@@ -182,6 +182,8 @@ local function KeySetter(parent, action)
 	end)
 	s:SetScript("OnHide", function() s:Stop() status:SetText("") end)
 	s:SetScript("OnShow", function() s:Refresh() end)
+	s:RegisterEvent("PLAYER_REGEN_DISABLED")
+	s:SetScript("OnEvent", function() s:Stop() end)
 	s:Refresh()
 	return s
 end
